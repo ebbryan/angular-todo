@@ -9,6 +9,7 @@
 
   <form (submit)="onSubmit($event)">
     <input type="text" name="todo" placeholder="New todo" [(ngModel)]="newTodo" required />
+    <p>{{ error() }}</p>
     <button type="submit">Add Todo</button>
   </form>
 </main>

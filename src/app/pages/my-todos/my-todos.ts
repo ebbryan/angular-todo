@@ -1,12 +1,9 @@
+import axios from 'axios';
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-
 import { FormsModule } from '@angular/forms';
-
-
 import { environment } from '../../../environments/environment.development';
 import { Todo, TodosResponse } from './my-todos.type';
-
 
 @Component({
   selector: 'app-my-todos',
@@ -16,9 +13,14 @@ import { Todo, TodosResponse } from './my-todos.type';
 })
 export class MyTodos {
   isLoading = signal(false);
+  error = signal('');
   newTodo: string = '';
 
   todos: Todo[] = [];
+
+  endpoint = axios.create({
+    baseURL: environment.apiUrl,
+  });
 
   ngOnInit() {
     this.fetchTodos();
@@ -29,7 +31,7 @@ export class MyTodos {
       this.isLoading.set(true);
       const response = await fetch(`${environment.apiUrl}/todos`);
       const data: TodosResponse = await response.json();
-      this.todos = data.data;
+      this.todos = data.data.filter((todo) => todo.status !== 'archived');
       if (this.todos.length === 0) {
         this.todos = [];
       }
@@ -40,14 +42,26 @@ export class MyTodos {
     }
   }
 
-  onSubmit(event: Event) {
-    let payload = {};
+  onSubmit(event: any) {
     event.preventDefault();
-    if (!this.newTodo.trim()) return;
-    payload = { title: this.newTodo, status: 'pending' };
-
-    console.log('🚀 ~ MyTodos ~ onSubmit ~ payload:', payload);
-
-    this.newTodo = '';
+    const payload = {
+      title: this.newTodo,
+      status: 'pending',
+    };
+    if (this.newTodo.trim() === '') {
+      this.error.set('Todo cannot be empty');
+      return;
+    }
+    this.endpoint
+      .post('/todos', payload)
+      .then((response) => {
+        console.log(response);
+        this.fetchTodos();
+        this.newTodo = '';
+        this.error.set('');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 }
