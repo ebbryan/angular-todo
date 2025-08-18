@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 
+import { CONSTANTS } from '../../../constants/endpoints.constants';
 import { Todo, TodosResponse } from './my-todos.type';
 
 @Component({
@@ -22,7 +23,7 @@ export class MyTodos {
 
   async fetchTodos() {
     try {
-      const response = await fetch('http://localhost:8339/todos');
+      const response = await fetch(`${CONSTANTS.API_BASE_URL}${CONSTANTS.TODOS_ENDPOINT}`);
       const data: TodosResponse = await response.json();
       this.todos = data.data;
       console.log('Fetched todos:', this.todos);
