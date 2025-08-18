@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 
-import { CONSTANTS } from '../../../constants/endpoints.constants';
+
+import { environment } from '../../../environments/environment.development';
 import { Todo, TodosResponse } from './my-todos.type';
+
 
 @Component({
   selector: 'app-my-todos',
@@ -13,6 +15,7 @@ import { Todo, TodosResponse } from './my-todos.type';
   styleUrl: './my-todos.css',
 })
 export class MyTodos {
+  isLoading = signal(false);
   newTodo: string = '';
 
   todos: Todo[] = [];
@@ -23,9 +26,14 @@ export class MyTodos {
 
   async fetchTodos() {
     try {
-      const response = await fetch(`${CONSTANTS.API_BASE_URL}${CONSTANTS.TODOS_ENDPOINT}`);
+      this.isLoading.set(true);
+      const response = await fetch(`${environment.apiUrl}/todos`);
       const data: TodosResponse = await response.json();
       this.todos = data.data;
+      if (this.todos.length === 0) {
+        this.todos = [];
+      }
+      this.isLoading.set(false);
       console.log('Fetched todos:', this.todos);
     } catch (error) {
       console.error('Error fetching todos:', error);
@@ -36,7 +44,7 @@ export class MyTodos {
     let payload = {};
     event.preventDefault();
     if (!this.newTodo.trim()) return;
-    payload = { todo: this.newTodo };
+    payload = { title: this.newTodo, status: 'pending' };
 
     console.log('🚀 ~ MyTodos ~ onSubmit ~ payload:', payload);
 
