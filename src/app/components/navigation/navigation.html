@@ -1,0 +1,14 @@
+<nav class="nav">
+  <h1 (click)="onLogoClick()">Angular Todo App</h1>
+  <ul class="nav-list">
+    <li class="nav-items" *ngFor="let route of routes">
+      <a
+        [routerLink]="route.path"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        {{ route.title }}
+      </a>
+    </li>
+  </ul>
+</nav>

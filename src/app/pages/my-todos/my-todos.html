@@ -1,0 +1,9 @@
+<main>
+  @for (todo of todos; track todo.id) {
+  <p>{{ todo.title }} - {{ todo.status === 'completed' ? 'Done' : 'Pending' }}</p>
+  }
+  <form (submit)="onSubmit($event)">
+    <input type="text" name="todo" placeholder="New todo" [(ngModel)]="newTodo" required />
+    <button type="submit">Add Todo</button>
+  </form>
+</main>
