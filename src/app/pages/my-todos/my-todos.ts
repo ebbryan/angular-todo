@@ -4,11 +4,11 @@ import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
 import { TodoType, TodosResponse } from './my-todos.type';
-import { Todo as TodoComponent } from '../../components/todo/todo';
+import { TodoItem } from '../../components/todo-item/todo-item';
 
 @Component({
   selector: 'app-my-todos',
-  imports: [FormsModule, CommonModule, TodoComponent],
+  imports: [FormsModule, CommonModule, TodoItem],
   templateUrl: './my-todos.html',
   styleUrl: './my-todos.css',
 })
@@ -32,10 +32,10 @@ export class MyTodos {
       this.isLoading.set(true);
       const response = await fetch(`${environment.apiUrl}/todos`);
       const data: TodosResponse = await response.json();
-      this.todos = data.data.filter((todo) => todo.status !== 'archived');
-      if (this.todos.length === 0) {
-        this.todos = [];
-      }
+      this.todos = data.data
+        .filter((todo) => todo.status !== 'archived')
+        .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
       this.isLoading.set(false);
       console.log('Fetched todos:', this.todos);
     } catch (error) {

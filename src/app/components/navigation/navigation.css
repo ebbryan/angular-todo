@@ -11,6 +11,7 @@
   left: 0; /* Add this */
   right: 0; /* Add this */
   z-index: 1000; /* Optional: keeps nav above other content */
+  background-color: white;
 }
 
 .nav h1 {

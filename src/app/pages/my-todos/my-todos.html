@@ -1,7 +1,6 @@
 <main class="container">
-  <h1>My Todos</h1>
-  <app-todo [todos]="todos" [isLoading]="isLoading()"></app-todo>
   <form (submit)="onSubmit($event)" class="todo-form">
+    <h1>My Todos</h1>
     <div class="input-field-container">
       <input
         type="text"
@@ -14,4 +13,9 @@
       <button type="submit">Add Todo</button>
     </div>
   </form>
+  <section class="todo-section">
+    @for (todo of todos; track todo.id) {
+    <app-todo-item [todo]="todo"></app-todo-item>
+    }
+  </section>
 </main>
