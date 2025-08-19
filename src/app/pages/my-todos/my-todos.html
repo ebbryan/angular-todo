@@ -1,12 +1,6 @@
 <main>
   <h1>My Todos</h1>
-
-  @if (isLoading()) {
-  <p>Loading...</p>
-  } @else { @for (todo of todos; track todo.id) {
-  <p>{{ todo.title }} - {{ todo.status === 'completed' ? 'Done' : 'Pending' }}</p>
-  } }
-
+  <app-todo [todos]="todos" [isLoading]="isLoading()"></app-todo>
   <form (submit)="onSubmit($event)">
     <input type="text" name="todo" placeholder="New todo" [(ngModel)]="newTodo" required />
     <p>{{ error() }}</p>

@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { environment } from '../../../environments/environment.development';
-import { Todo, TodosResponse } from './my-todos.type';
+import { TodoType, TodosResponse } from './my-todos.type';
+import { Todo as TodoComponent } from '../../components/todo/todo';
 
 @Component({
   selector: 'app-my-todos',
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, TodoComponent],
   templateUrl: './my-todos.html',
   styleUrl: './my-todos.css',
 })
@@ -16,7 +17,7 @@ export class MyTodos {
   error = signal('');
   newTodo: string = '';
 
-  todos: Todo[] = [];
+  todos: TodoType[] = [];
 
   endpoint = axios.create({
     baseURL: environment.apiUrl,

@@ -1,0 +1,9 @@
+@if (isLoading) {
+<p>Loading...</p>
+} @else { @for (todo of todos; track todo.id) {
+<!-- Todo item here -->
+<div class="todo-container">
+  <app-todo-item [todo]="todo"></app-todo-item>
+  <!-- <p>{{ todo.title }} - {{ todo.status === 'completed' ? 'Done' : 'Pending' }}</p> -->
+</div>
+} }

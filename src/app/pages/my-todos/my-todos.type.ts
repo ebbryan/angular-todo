@@ -1,4 +1,4 @@
-export type Todo = {
+export type TodoType = {
   id: string;
   status: 'pending' | 'completed' | 'in_progress' | 'archived';
   title: string;
@@ -7,6 +7,6 @@ export type Todo = {
 };
 
 export type TodosResponse = {
-  data: Todo[];
+  data: TodoType[];
   success: boolean;
 };
