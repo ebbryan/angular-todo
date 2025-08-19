@@ -1,9 +1,17 @@
-<main>
+<main class="container">
   <h1>My Todos</h1>
   <app-todo [todos]="todos" [isLoading]="isLoading()"></app-todo>
-  <form (submit)="onSubmit($event)">
-    <input type="text" name="todo" placeholder="New todo" [(ngModel)]="newTodo" required />
-    <p>{{ error() }}</p>
-    <button type="submit">Add Todo</button>
+  <form (submit)="onSubmit($event)" class="todo-form">
+    <div class="input-field-container">
+      <input
+        type="text"
+        name="todo"
+        [placeholder]="error() ? error() : 'Enter a todo'"
+        [(ngModel)]="newTodo"
+        [class.error]="error()"
+        required
+      />
+      <button type="submit">Add Todo</button>
+    </div>
   </form>
 </main>
