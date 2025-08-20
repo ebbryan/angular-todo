@@ -17,7 +17,6 @@ export class MyTodos {
   isOpen = signal(false);
   error = signal('');
 
-  todoId = signal('');
   newTodo: string = '';
 
   todos: TodoType[] = [];
@@ -46,7 +45,7 @@ export class MyTodos {
     }
   }
 
-  onSubmit(event: any) {
+  onCreateTodo(event: any) {
     event.preventDefault();
     const payload = {
       title: this.newTodo,
@@ -63,6 +62,23 @@ export class MyTodos {
         this.fetchTodos();
         this.newTodo = '';
         this.error.set('');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  onUpdateTodo(event: any, todo: TodoType) {
+    event.preventDefault();
+    const payload = {
+      title: todo.title,
+      status: todo.status,
+    };
+    this.endpoint
+      .put(`/todos/${todo.id}`, payload)
+      .then((response) => {
+        console.log(response);
+        this.fetchTodos();
       })
       .catch((error) => {
         console.error(error);

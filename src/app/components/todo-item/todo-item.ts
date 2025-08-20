@@ -14,5 +14,5 @@ export class TodoItem {
   readonly CheckIcon = Check;
   readonly CircleDashedIcon = CircleDashed;
   @Input() todo?: TodoType;
-  @Input() onOpenModal!: (id: string) => void;
+  @Input() onUpdateTodo?: (event: any, todo: TodoType) => void;
 }
