@@ -14,7 +14,10 @@ import { TodoItem } from '../../components/todo-item/todo-item';
 })
 export class MyTodos {
   isLoading = signal(false);
+  isOpen = signal(false);
   error = signal('');
+
+  todoId = signal('');
   newTodo: string = '';
 
   todos: TodoType[] = [];

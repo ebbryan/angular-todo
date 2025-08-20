@@ -1,4 +1,9 @@
 <article class="todo-item">
   <h2>{{ todo?.title }}</h2>
-  <p>{{ todo?.status }}</p>
+  <ng-container *ngIf="todo?.status === 'completed'; else pending">
+    <lucide-icon [img]="CheckIcon" class="complete-icon" size="18"> </lucide-icon>
+  </ng-container>
+  <ng-template #pending>
+    <lucide-icon [img]="CircleDashedIcon" class="pending-icon" size="18"> </lucide-icon>
+  </ng-template>
 </article>

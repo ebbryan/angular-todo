@@ -1,13 +1,13 @@
 .todo-item {
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  padding: 0.5rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
   background-color: #fff;
-  border-radius: 4px;
+  border-radius: 0.5rem;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
-  margin: 2px 0;
   cursor: pointer;
   transition: transform 0.2s;
 }
@@ -16,10 +16,34 @@
   transform: scale(1.03);
 }
 
+.todo-item h2,
+.todo-item p {
+  margin: 0;
+}
+
 .todo-item h2 {
   margin-right: 16px;
 }
 
 .todo-item p {
-  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* space between icon and text */
+  margin: 0;
+}
+
+.pending-icon,
+.complete-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pending-icon {
+  color: #ff9800;
+}
+
+.complete-icon {
+  color: #4caf50;
 }
